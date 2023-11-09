@@ -1,4 +1,8 @@
 <?php
+$sort = 'name';
+$filter = 'all';
+$searchTerm = '';
+
 session_start();
 
 // Initialize tasks array if it doesn't exist in the session
