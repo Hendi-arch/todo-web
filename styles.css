@@ -35,6 +35,15 @@ button:hover {
     background-color: #0056b3;
 }
 
+.centered-content {
+    text-align: center;
+}
+
+.centered-table {
+    margin: 0 auto; /* Center the table horizontally */
+    display: table; /* Ensure centering works with margin auto */
+}
+
 /* Style the primary button */
 .button-primary {
     background-color: #007bff;
@@ -151,4 +160,16 @@ button:hover {
 .green {
     color: #008000;
     /* Green */
+}
+
+/* Add styles for the table and table cells */
+table {
+    border: 2px solid #000;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    border: 1px solid #000;
+    padding: 8px;
 }

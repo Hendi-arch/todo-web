@@ -22,6 +22,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['addTask'])) {
             'completed' => false,
         ];
         $_SESSION['tasks'][$taskId] = $newTask;
+
+        // Redirect to the same page after successfully adding a task
+        header('Location: index.php');
+        exit;
     }
 }
 
@@ -48,7 +52,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Sort tasks
-function compareTasks($a, $b) {
+function compareTasks($a, $b)
+{
     global $sort;
     return strcmp($a[$sort], $b[$sort]);
 }
@@ -84,34 +89,44 @@ if (!empty($searchTerm)) {
 </head>
 
 <body>
-    <h1>Task List</h1>
-    <form action="index.php" method="post">
-        <input type="text" name="task" placeholder="Add a new task" required>
-        <input type="text" name="category" placeholder="Category" required>
-        <label for="due_date">Due Date:</label>
-        <input type="date" name="due_date" required>
-        <button type="submit" class="button-primary" name="addTask">Add Task</button>
-    </form>
+    <div class="centered-content">
+        <h1>Task List</h1>
+        <table class="centered-table">
+            <form action="index.php" method="post">
+                <tr>
+                    <td><input type="text" name="task" placeholder="Add a new task" required></td>
+                    <td><input type="text" name="category" placeholder="Category" required></td>
+                    <td>
+                        <label for="due_date">Due Date:</label>
+                        <input type="date" name="due_date" required>
+                    </td>
+                    <td><button type="submit" class="button-primary" name="addTask">Add Task</button></td>
+                </tr>
+            </form>
+        </table>
+    </div>
 
-    <h2>Tasks</h2>
-    <form action="index.php" method="post">
-        <label for="sort">Sort by:</label>
-        <select id="sort" name="sort" onchange="this.form.submit();">
-            <option value="name" <?= ($sort === 'name') ? 'selected' : '' ?>>Name</option>
-            <option value="due_date" <?= ($sort === 'due_date') ? 'selected' : '' ?>>Due Date</option>
-            <option value="category" <?= ($sort === 'category') ? 'selected' : '' ?>>Category</option>
-        </select>
-        <label for="filter">Filter:</label>
-        <select id="filter" name="filter" onchange="this.form.submit();">
-            <option value="all" <?= ($filter === 'all') ? 'selected' : '' ?>>All</option>
-            <option value="completed" <?= ($filter === 'completed') ? 'selected' : '' ?>>Completed</option>
-            <option value="incomplete" <?= ($filter === 'incomplete') ? 'selected' : '' ?>>Incomplete</option>
-        </select>
-        <label for="search">Search:</label>
-        <input type="text" name="search" id="search" value="<?= isset($_POST['search']) ? $_POST['search'] : '' ?>">
-        <button type="submit" class="button-secondary" name="searchTask">Search</button>
-        <button type="submit" class="button-secondary" name="clear">Reset</button>
-    </form>
+    <div class="centered-content">
+        <h2>Tasks</h2>
+        <form action="index.php" method="post">
+            <label for="sort">Sort by:</label>
+            <select id="sort" name="sort" onchange="this.form.submit();">
+                <option value="name" <?= ($sort === 'name') ? 'selected' : '' ?>>Name</option>
+                <option value="due_date" <?= ($sort === 'due_date') ? 'selected' : '' ?>>Due Date</option>
+                <option value="category" <?= ($sort === 'category') ? 'selected' : '' ?>>Category</option>
+            </select>
+            <label for="filter">Filter:</label>
+            <select id="filter" name="filter" onchange="this.form.submit();">
+                <option value="all" <?= ($filter === 'all') ? 'selected' : '' ?>>All</option>
+                <option value="completed" <?= ($filter === 'completed') ? 'selected' : '' ?>>Completed</option>
+                <option value="incomplete" <?= ($filter === 'incomplete') ? 'selected' : '' ?>>Incomplete</option>
+            </select>
+            <label for="search">Search:</label>
+            <input type="text" name="search" id="search" value="<?= isset($_POST['search']) ? $_POST['search'] : '' ?>">
+            <button type="submit" class="button-secondary" name="searchTask">Search</button>
+            <button type="submit" class="button-secondary" name="clear">Reset</button>
+        </form>
+    </div>
 
     <ul>
         <?php foreach ($tasks as $task) : ?>
